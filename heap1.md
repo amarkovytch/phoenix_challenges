@@ -3,7 +3,8 @@
 ### The basic idea behind the exploit occurred to me in a couple of minutes. It is how to make use of it correctly what took a couple of days
 
 * So you have 4 heap allocated data structures: 2 structs, 2 char arrays. After some experimentation with GDB (and some logical thinking) you will discover that those 4 chunks are allocated in adjacent monotonically raising memory locations:
-![](heap1.png)
+
+    ![](heap1.drawio.png)
 
 * So ... Do you see where this is going ? The first *strcpy* allows you to place arbitrary memory location in second *ptr*. The second *strcpy* allows you to place any value inside this location. We've got ourselves a [write-what-where primitive](https://cwe.mitre.org/data/definitions/123.html). The possibilities are now endless !
 * So the first thing I tried to do is to follow the standard path and change the ret value on stack so that we jump to *winner* function when *main* finishes. This approach turned out to be problematic. First of all, if you just overwrite the *main* ret, the *winner* will be called, but the program will crash immediately after that. You need to place the original address to which *main* was supposed to return right next to *winner* on the stack. Second and more important issue. You need to supply the exact address on stack where *main*'s return address resides. This is super fragile and environment dependent. You can end up like me making your exploit work in GDB, but after that spending days of figuring out why this doesn't work without GDB. [We already saw](stack5.md) the trick with LINES and COLUMNS, but apparently even on the same machine this still does not guarantee that the stack offset will be exactly the same with vs without GDB, not talking about building an exploit on your local machine for some remote host which you do not control and which environment variables you don't necessarily know. In fact in this exercise, I wasn't able to reproduce the exact same stack address. I did discover a simple technique on how to run a process without GDB and then make it stuck so that you can attach with GDB. In this case, you will see the stack addresses (and environment) exactly as they will be present if you run the exe directly. See [patch2help](https://github.com/amarkovytch/research_tools#patch2halt) for more info. In case you want to play with this on your own, be my guest, this is what worked with GDB on my environment 
@@ -45,4 +46,4 @@
     ```
 
 
-## Bonus section 
+## Bonus section \
