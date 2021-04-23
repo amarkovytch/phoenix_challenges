@@ -3712,7 +3712,7 @@ Void_t* mALLOc(size_t bytes)
 */
 
 #if __STD_C
-void fREe(Void_t* mem)
+void fREe (Void_t* mem)
 #else
 void fREe(mem) Void_t* mem;
 #endif
